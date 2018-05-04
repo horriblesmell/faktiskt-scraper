@@ -9,15 +9,9 @@ class FaktisktStatistics(object):
 
     def __init__(self, investigation_data, group):
         super(FaktisktStatistics, self).__init__()
-        self.investigation_data = investigation_data
+        self.df = pd.DataFrame.from_records(investigation_data)
+        self.df = self.df.drop_duplicates(subset="claim_url")
         self.group = group
-        self.parse_data()
-
-    def parse_data(self, method="records"):
-        if method == "records":
-            self.df = pd.DataFrame.from_records(self.investigation_data)
-        else:
-            raise TypeError
 
     @property
     def n_investigations(self):
